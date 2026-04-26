@@ -1,0 +1,41 @@
+<launch>
+
+    <node pkg="terrain_analysis" type="terrainAnalysis" name="terrainAnalysisRe" output="screen" required="true">
+        <param name="voxel_point_update_thre" type="int" value="100" />
+        <param name="terrain_voxel_time_update_thre" type="double" value="2.0" />
+        <param name="downsample_voxel_size" type="double" value="0.05" />
+        <param name="min_rel_z" type="double" value="-0.8" />
+        <param name="max_rel_z" type="double" value="0.8" />
+        <param name="dis_ratio_z_" type="double" value="0.2" />
+        <param name="decay_time" type="double" value="5.0" />
+        <param name="no_decay_dis" type="double" value="4.0" />
+
+        <param name="robot_height" type="double" value="0.6" />
+        <param name="remove_dyn_obs_flag" type="bool" value="true" />
+        <param name="min_dyn_obs_dis" type="double" value="0.3" />
+        <param name="min_dyn_obs_rel_z" type="double" value="-0.0" />
+        <param name="min_dyn_obs_angle" type="double" value="30.0" />
+        <param name="min_dyn_obs_fov" type="double" value="-16.0" />
+        <param name="max_dyn_obs_fov" type="double" value="16.0" />
+        <param name="min_dyn_obs_pt_num" type="int" value="0" />
+
+        <param name="use_sorting" type="bool" value="true" />
+        <param name="quantile_z" type="double" value="0.25" />
+        <param name="max_ground_lift" type="double" value="0.2" />
+        <param name="limit_ground_lift" type="bool" value="false" />
+        
+        <param name="min_dyn_obs_pt_thres" type="double" value="10.0" />
+        <param name="consider_drop" type="bool" value="true" />
+        <param name="min_block_pt_num" type="int" value="0" />
+
+        <param name="no_data_obstacle" type="bool" value="false" />
+        <param name="no_data_block_skip_num" type="int" value="0" />
+        
+        <param name="sub_odom_topic" type="string" value="/odometry/filtered" />
+        <param name="sub_scan_topic" type="string" value="/LIVO/cloud_registered" />
+        <param name="frame_id" type="string" value="camera_init" />
+        <!-- <param name="sub_odom_topic_name" type="string" value="/odometry/imu" />
+        <param name="sub_cloud_topic_name" type="string" value="/lio_sam/mapping/cloud_registered_raw" /> -->
+    </node>
+
+</launch>

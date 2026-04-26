@@ -1,0 +1,103 @@
+<launch>
+
+  <arg name="sensorOffsetX" default="0.1"/>
+  <arg name="sensorOffsetY" default="0"/>
+  <arg name="cameraOffsetZ" default="0"/>
+  <arg name="twoWayDrive" default="false"/>
+  <arg name="maxSpeed" default="0.8"/>
+  <arg name="autonomyMode" default="true"/>
+  <arg name="autonomySpeed" default="1.0"/>
+  <arg name="joyToSpeedDelay" default="2.0"/>
+  <arg name="goalX" default="0"/>
+  <arg name="goalY" default="0"/>
+
+  <node pkg="local_planner" type="localPlanner" name="localPlanner" output="screen" required="true">
+    <param name="robot_length" type="double" value="0.8" />
+    <param name="robot_width" type="double" value="0.5" />
+    <param name="sensor_offset_x" value="$(arg sensorOffsetX)" />
+    <param name="sensor_offset_y" value="$(arg sensorOffsetY)" />
+
+    <param name="laser_voxel_size" type="double" value="0.05" />
+    <param name="terrain_voxel_size" type="double" value="0.2" />
+    <param name="min_rel_z" type="double" value="-0.5" />
+    <param name="max_rel_z" type="double" value="0.25" />
+    
+    <param name="twoway_drive_flag" value="$(arg twoWayDrive)" />
+    <param name="use_terrain_analysis_flag" type="bool" value="true" />
+    <param name="check_obs_flag" type="bool" value="true" />
+    <param name="check_rot_obs_flag" type="bool" value="false" />
+    <param name="use_cost_flag" type="bool" value="false" />
+    <param name="dir_to_robot_flag" type="bool" value="false" />
+    <param name="autonomy_mode_flag" value="$(arg autonomyMode)" />
+    <param name="path_scale_by_speed_flag" type="bool" value="true" />
+    <param name="path_range_by_speed_flag" type="bool" value="true" />
+    <param name="path_crop_by_goal_flag" type="bool" value="true" />
+    <param name="mannual_nav_goal_flag" type="bool" value="true" />
+
+    <param name="adjacent_range" type="double" value="5.0" />
+    <param name="obs_height_thres" type="double" value="0.30" />
+    <param name="ground_height_thres" type="double" value="0.1" />
+    <param name="cost_height_thres" type="double" value="0.3" />
+    <param name="min_cost_score" type="double" value="0.02" />
+    <param name="dir_weight" type="double" value="0.02" />
+    
+    <param name="point_per_path_thres" type="int" value="2" />
+    <param name="goal_angle_diff_thres" type="double" value="90.0" />
+    
+    <param name="path_scale" type="double" value="1.25" />
+    <param name="min_path_scale" type="double" value="0.75" />
+    <param name="min_path_range" type="double" value="1.0" />
+    <param name="path_scale_step" type="double" value="0.25" />
+    <param name="path_range_step" type="double" value="0.5" />
+    
+    <param name="autonomy_speed" value="$(arg autonomySpeed)" />
+    <param name="max_speed" value="$(arg maxSpeed)" />
+
+    <param name="goal_x" type="double" value="$(arg goalX)" />
+    <param name="goal_y" type="double" value="$(arg goalY)" />
+    <param name="goal_clear_range" type="double" value="0.5" />
+
+    <param name="path_folder" type="string" value="$(find local_planner)/paths" />
+    <param name="path_frame_id" type="string" value="vehicle" />
+
+  </node>
+
+  <node pkg="local_planner" type="pathFollower" name="pathFollower" output="screen" required="true">
+    <param name="sensorOffsetX" value="$(arg sensorOffsetX)" />
+    <param name="sensorOffsetY" value="$(arg sensorOffsetY)" />
+    <param name="pubSkipNum" type="int" value="10" />
+    <param name="twoWayDrive" value="$(arg twoWayDrive)" />
+    <param name="lookAheadDis" type="double" value="0.5" />
+    <param name="yawRateGain" type="double" value="7.5" />
+    <param name="stopYawRateGain" type="double" value="7.5" />
+    <param name="maxYawRate" type="double" value="45.0" />
+    <param name="maxSpeed" value="$(arg maxSpeed)" />
+    <param name="maxAccel" type="double" value="1.0" />
+    <param name="switchTimeThre" type="double" value="1.0" />
+    <param name="dirDiffThre" type="double" value="0.1" />
+    <param name="stopDisThre" type="double" value="0.2" />
+    <param name="slowDwnDisThre" type="double" value="0.85" />
+    <param name="useInclRateToSlow" type="bool" value="false" />
+    <param name="inclRateThre" type="double" value="120.0" />
+    <param name="slowRate1" type="double" value="0.25" />
+    <param name="slowRate2" type="double" value="0.5" />
+    <param name="slowTime1" type="double" value="2.0" />
+    <param name="slowTime2" type="double" value="2.0" />
+    <param name="useInclToStop" type="bool" value="false" />
+    <param name="inclThre" type="double" value="45.0" />
+    <param name="stopTime" type="double" value="5.0" />
+    <param name="noRotAtStop" type="bool" value="false" />
+    <param name="noRotAtGoal" type="bool" value="true" />
+    <param name="autonomyMode" value="$(arg autonomyMode)" />
+    <param name="autonomySpeed" value="$(arg autonomySpeed)" />
+    <param name="joyToSpeedDelay" value="$(arg joyToSpeedDelay)" />
+  </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="vehicleTransPublisher" args="-$(arg sensorOffsetX) -$(arg sensorOffsetY) 0 0 -0.2618 0 /base_link /vehicle 1"/>
+  <!-- <node pkg="tf" type="static_transform_publisher" name="vehicleTransPublisher" args="-$(arg sensorOffsetX) -$(arg sensorOffsetY) 0 0 0 0 /body_fastlio /vehicle 1000"/> -->
+
+  <!-- <node pkg="tf" type="static_transform_publisher" name="velodyneTransPublisher" args="-0 -0 0 0 0 0 /sensor /velodyne 1000"/> -->
+ 
+  <!-- <node pkg="tf" type="static_transform_publisher" name="sensorTransPublisher" args="0 0 $(arg cameraOffsetZ) -1.5707963 0 -1.5707963 /sensor /camera 1000"/> -->
+
+</launch>

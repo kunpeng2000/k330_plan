@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_filter" clear_params="true" output="screen">
+    	<rosparam file="$(find fast_livo)/config/ekf.yaml" command="load" />
+  	</node>
+</launch>

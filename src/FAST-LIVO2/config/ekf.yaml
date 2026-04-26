@@ -1,0 +1,60 @@
+frequency: 200             # 融合频率
+two_d_mode: false          # 如果只在平面内运动，打开它
+sensor_timeout: 0.1       # 传感器超时
+# 定义 IMU 传感器
+imu0: /livox/imu
+imu0_config: [false, false, false,   # 不用位置
+              false,  false,  false,    # 用 IMU 输出的 roll,pitch,yaw
+              false, false, false,   # 不用线速度
+              true,  true,  true,   # 不用角速度（已经在 Predict 步骤内部积分）
+              true,  true,  true] 
+imu0_differential: false
+imu0_queue_size: 10
+imu0_measurement_noise_covariance: [
+  0,    0,    0, 
+  0,    0,    0,  
+  0,    0,    0,
+  0.005, 0.005, 0.005,  
+  0.001, 0.001, 0.001
+]
+
+# 定义 里程计 传感器
+odom0: /LIVO/odometry
+odom0_config: [true,true,true,
+                true,true,true,
+                false,false,false,
+                false,false,false,
+                false,false,false] 
+odom0_differential: false
+odom0_queue_size: 10
+odom0_measurement_noise_covariance: [
+  0.01, 0.01, 0.01,     # x, y, z 位置测量噪声
+  0.005, 0.005, 0.005,     # roll, pitch, yaw 角度测量噪声
+  0,    0,    0,      # vx, vy, vz 线速度测量噪声
+  0,    0,    0,        # ax, ay, az 未使用
+  0,    0,    0         # wx, wy, wz 未使用
+]
+
+process_noise_covariance: [
+  0.05, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+  0,    0.05, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+  0,    0,    0.05, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+  0,    0,    0,    0.01, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+  0,    0,    0,    0,    0.01, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+  0,    0,    0,    0,    0,    0.01, 0,    0,    0,    0,    0,    0,    0,    0,    0,
+  0,    0,    0,    0,    0,    0,    0.1,  0,    0,    0,    0,    0,    0,    0,    0,
+  0,    0,    0,    0,    0,    0,    0,    0.1,  0,    0,    0,    0,    0,    0,    0,
+  0,    0,    0,    0,    0,    0,    0,    0,    0.1,  0,    0,    0,    0,    0,    0,
+  0,    0,    0,    0,    0,    0,    0,    0,    0,    0.2,  0,    0,    0,    0,    0,
+  0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0.2,  0,    0,    0,    0,
+  0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0.2,  0,    0,    0,
+  0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0.01, 0,    0,
+  0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0.01, 0,
+  0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0.01
+]
+
+# 发布融合后里程计
+publish_tf: true
+odom_frame: camera_init
+base_link_frame: base_link
+world_frame: camera_init

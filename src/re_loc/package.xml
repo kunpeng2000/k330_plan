@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>init_relocalizer</name>
+  <version>0.0.1</version>
+  <description>The online_relocalizer package for global relocalization</description>
+
+  <maintainer email="user@todo.todo">Your Name</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roscpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_eigen</depend>
+  <depend>pcl_conversions</depend>
+
+  <build_depend>libpcl-all-dev</build_depend>
+  <exec_depend>libpcl-all</exec_depend>
+  <depend>eigen</depend>
+
+  <export>
+  </export>
+</package>

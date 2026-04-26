@@ -1,0 +1,7 @@
+<launch>
+    <param name="/use_sim_time" value="false" />
+
+    <arg name="pcd_file_path" default="/home/fan2000/workspace/slam_projects/reloc_sc_ws/src/re_loc/pcd_data_1/clouds/000014.pcd" />
+
+    <node pkg="init_relocalizer" type="pub_pcd" name="pub_pcd_node" output="screen" args="$(arg pcd_file_path)" />
+</launch>
