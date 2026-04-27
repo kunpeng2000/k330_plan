@@ -276,7 +276,7 @@ int localPlanner::readPlyHeader(FILE *filePtr){
 		if (val != 1) {
 			printf ("\nError reading input files, exit.\n\n");
 			ros::shutdown();
-			return;
+			return 0;
 		}
 
 		strLast = strCur;
@@ -287,7 +287,7 @@ int localPlanner::readPlyHeader(FILE *filePtr){
 			if (val != 1) {
 				printf ("\nError reading input files, exit.\n\n");
 				ros::shutdown();
-				return;
+				return 0;
 			}
 		}
 	}
