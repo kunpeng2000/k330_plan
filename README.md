@@ -62,3 +62,18 @@ roslaunch terrain_analysis terrain_analysis_planner.launch
 ```
 
 **Description:** Launch the Falco navigation and terrain analysis module. After setting a target point (Goal) in RViz, the planner will automatically generate a safe path and start publishing velocity control commands via the `cmd_vel` topic.
+
+## 🔗 References & Acknowledgements
+This project is built upon or inspired by several outstanding open-source projects. We express our gratitude to the authors for their contributions to the robotics community:
+
+[FAST-LIVO2](https://github.com/hku-mars/FAST-LIVO2.git)
+
+[Scan Context](https://github.com/gisbi-kim/SC-LIO-SAM.git)
+
+[CMU Autonomous Exploration Development Environment](https://github.com/HongbiaoZ/autonomous_exploration_development_environment.git)
+
+[Sophus](https://github.com/strasdat/Sophus.git)
+
+[Vikit](https://github.com/xuankuzcr/rpg_vikit.git )
+
+[ROS Robot Localization Pkg](https://github.com/cra-ros-pkg/robot_localization.git)
